@@ -176,21 +176,19 @@ def draw_lives(surf, lives, img, x, y):
 def draw_init():
     cursor.execute("SELECT `score` FROM `user_score` ORDER BY `score` DESC LIMIT 3;")
     recodes = cursor.fetchall()
-    top_three_score = []
+    top_three_score = [0, 0, 0]
     for i in recodes:
-        if i == None:
-            top_three_score.append("0")
-        else:
-            top_three_score.append(str(i)[1:-2])
+        top_three_score.append(int(str(i)[1:-2]))
+    top_three_score.sort(reverse=True)
 
     screen.blit(background_img, (0, 0))
     draw_text(screen, "Allen的太空生存戰!", 48, width / 2, height / 4)
     draw_text(screen, "← →移動飛船，空白鍵發射子彈", 22, width / 2, height / 2)
     draw_text(screen, "按下任意鍵開始遊戲，Esc離開遊戲", 18, width / 2, height * 3 / 4)
     draw_text(screen, "排行榜", 16, 35, 5)
-    draw_text(screen, "1. " + top_three_score[0], 16, 35, 25)
-    draw_text(screen, "2. " + top_three_score[1], 16, 35, 45)
-    draw_text(screen, "3. " + top_three_score[2], 16, 35, 65)
+    draw_text(screen, "1. " + str(top_three_score[0]), 16, 35, 25)
+    draw_text(screen, "2. " + str(top_three_score[1]), 16, 35, 45)
+    draw_text(screen, "3. " + str(top_three_score[2]), 16, 35, 65)
 
     pygame.display.update()
     # 等待鍵盤被玩家按
